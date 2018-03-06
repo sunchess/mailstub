@@ -22,6 +22,13 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:user_id]
 
+# This is where you want the JSON of the mail to be posted to
+#config :mail_to_json, :webhook_url, System.get_env("M2J_WEBHOOK_URL")
+
+# The SMTP port to which we want our application to listen to
+config :mailstub, MailToJson,
+  smtp_port: 1025
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

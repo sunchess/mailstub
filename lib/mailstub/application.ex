@@ -14,6 +14,7 @@ defmodule Mailstub.Application do
       supervisor(MailstubWeb.Endpoint, []),
       # Start your own worker by calling: Mailstub.Worker.start_link(arg1, arg2, arg3)
       # worker(Mailstub.Worker, [arg1, arg2, arg3]),
+      supervisor(MailToJson, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -51,8 +51,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :mailstub, Mailstub.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: "dmitrievaleksandr",
+  password: "123",
   database: "mailstub_dev",
   hostname: "localhost",
   pool_size: 10

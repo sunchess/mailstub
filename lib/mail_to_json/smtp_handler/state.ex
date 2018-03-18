@@ -1,3 +1,3 @@
 defmodule MailToJson.SmtpHandler.State do
-  defstruct options: []
+  defstruct options: [], errors: false
 end

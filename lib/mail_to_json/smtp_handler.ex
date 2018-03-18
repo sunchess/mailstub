@@ -62,14 +62,34 @@ defmodule MailToJson.SmtpHandler do
 
 
   @spec handle_EHLO(binary, list, State.t) :: {:ok, list, State.t} | error_message
-  def handle_EHLO(_hostname, extensions, state) do
-    {:ok, extensions, state}
+  def handle_EHLO(hostname, extensions, state) do
+    :io.format("EHLO from ~s~n", [hostname])
+    # auth is enabled, so advertise it
+    my_extensions = extensions ++ [{'AUTH', 'CRAM-MD5'}];
+    {:ok, my_extensions, state}
   end
 
+  # it only gets called if you add AUTH to your ESMTP extensions
+  #@spec handle_AUTH(Type :: 'login' | 'plain' | 'cram-md5', Username :: binary(), Password :: binary() | {binary(), binary()}, state{}) -> {'ok', state{}} | 'error'
+  def handle_AUTH(:"cram-md5", username, {digest, seed}, state) do
+    case :smtp_util.compute_cram_digest("test", seed) do
+      ^digest ->
+        {:ok, state}
+      _ ->
+        {:ok, Map.put(state, :errors, "Authentication failed")}
+        #:error
+    end;
+  end
+  def handle_AUTH(type, _username, _password, state) do
+    {:ok, Map.put(state, :errors, "Authentication failed")}
+  end
 
   @doc "Accept or reject mail to incoming addresses here"
   @spec handle_MAIL(binary, State.t) :: {:ok, State.t} | error_message
-  def handle_MAIL(_sender, state) do
+  def handle_MAIL(sender, %State{errors: "Authentication failed"}=state) do
+    {:error, "535 Authentication failed.\r\n", state}
+  end
+  def handle_MAIL(sender, state) do
     {:ok, state}
   end
 
@@ -91,13 +111,14 @@ defmodule MailToJson.SmtpHandler do
     {:ok, "#{user}@#{:smtp_util.guess_FQDN()}", state}
   end
 
-
   @doc "Handle mail data. This includes subject, body, etc"
   @spec handle_DATA(binary, [binary,...], binary, State.t) :: {:ok, String.t, State.t} | {:error, String.t, State.t}
+  def handle_DATA(_from, _to, _data, %State{errors: "Authentication failed"}=state) do
+    {:error, "535 Authentication failed.\r\n", state}
+  end
   def handle_DATA(_from, _to, "", state) do
     {:error, "#{@smtp_mail_action_abort} Message too small", state}
   end
-
   def handle_DATA(from, to, data, state) do
     unique_id = Utils.create_unique_id()
 
@@ -106,7 +127,6 @@ defmodule MailToJson.SmtpHandler do
     mail = parse_mail(data, state, unique_id)
     mail_json = Poison.encode!(mail)
 
-    IO.inspect(mail_json)
     #webhook_url = MailToJson.config(:webhook_url)
     #HTTPoison.post(webhook_url, mail_json, %{"Accept" => "application/json"})
 

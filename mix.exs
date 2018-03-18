@@ -42,6 +42,8 @@ defmodule Mailstub.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:eiconv,    github: "zotonic/eiconv"},
+      #{:gen_smtp,  github: "sunchess/gen_smtp"},
+      #{:gen_smtp, path: "../gen_smtp"},
       {:gen_smtp,  github: "Vagabond/gen_smtp"},
       {:httpoison, "~> 1.0"}
     ]

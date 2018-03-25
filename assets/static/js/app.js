@@ -12,16 +12,48 @@
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
 import "phoenix_html"
-
+import Vue from 'vue'
+import VueResource from 'vue-resource'
+import VueRouter from 'vue-router'
 // Import local files
 //
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+
+
+// Import Vue components
+import App from "../components/App"
+import Home from "../components/Home"
+import Login from "../components/Login"
+
+Vue.config.productionTip = false
+Vue.use(VueResource)
+Vue.use(VueRouter)
+Vue.http.options.root = '/api';
+
+const router = new VueRouter({
+  mode: 'history',
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: Home,
+    },
+
+    {
+      path: '/login',
+      name: 'login',
+      component: Login,
+    },
+  ],
+});
+
+
 new Vue({
-  el: "#hello-world",
-  data: {
-    message: "Hello World"
-  }
+  el: '#app',
+  router,
+  template: '<App/>',
+  components: { App }
 });

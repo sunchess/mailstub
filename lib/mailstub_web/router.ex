@@ -13,14 +13,17 @@ defmodule MailstubWeb.Router do
     plug :accepts, ["json"]
   end
 
+  # Other scopes may use custom stacks.
+  scope "/api", MailstubWeb.Api do
+    pipe_through :api
+
+    resources "/users", UsersController
+  end
+
   scope "/", MailstubWeb do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/*path", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", MailstubWeb do
-  #   pipe_through :api
-  # end
 end

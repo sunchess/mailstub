@@ -41,7 +41,7 @@ defmodule Mailstub.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
-      {:eiconv,    github: "zotonic/eiconv"},
+      {:eiconv, "~> 1.0.0-alpha1"},
       #{:gen_smtp,  github: "sunchess/gen_smtp"},
       #{:gen_smtp, path: "../gen_smtp"},
       {:gen_smtp,  github: "Vagabond/gen_smtp"},

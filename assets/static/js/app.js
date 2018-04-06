@@ -31,6 +31,7 @@ import VueMaterial from 'vue-material'
 import App from "../components/App"
 import Home from "../components/Home"
 import Login from "../components/Login"
+import SignUp from "../components/SignUp"
 
 Vue.config.productionTip = false
 
@@ -57,7 +58,12 @@ const router = new VueRouter({
       name: 'login',
       component: Login,
     },
-  ],
+    {
+      path: '/signup',
+      name: 'signup',
+      component: SignUp,
+    }
+  ]
 });
 
 

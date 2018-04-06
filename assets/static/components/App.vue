@@ -6,7 +6,7 @@
           <router-link to="/">
             h1 Mailstub
           </router-link>
-      .md-layout-item
+      .md-layout-item.pull-right
         <md-button class="md-raised md-primary" to="/login" exact>Login</md-button>
         <md-button to="/signup">Sign up</md-button>
     #main-content
@@ -27,10 +27,8 @@ export default {
   width: 80%;
   margin: 0 auto;
   padding-top: 20px;
-}
-.router-link-active{
-  a{
-    color: #ccc;
+  .pull-right{
+    text-align: right;
   }
 }
 </style>

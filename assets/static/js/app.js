@@ -15,8 +15,9 @@ import "phoenix_html"
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
-import Vuex from 'vuex'
 import VueMaterial from 'vue-material'
+
+import store from '../store/store'
 //import 'vue-material/dist/vue-material.css'
 
 // Import local files
@@ -41,7 +42,6 @@ Vue.use(VueResource)
 Vue.use(VueRouter)
 Vue.http.options.root = '/api';
 
-Vue.use(Vuex)
 
 
 const router = new VueRouter({
@@ -69,6 +69,7 @@ const router = new VueRouter({
 
 new Vue({
   el: '#app',
+  store,
   router,
   template: '<App/>',
   components: { App }

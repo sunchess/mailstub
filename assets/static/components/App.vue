@@ -4,9 +4,9 @@
       .md-layout-item
         .logo
           <router-link style="color: #505050; text-decoration: none;" to="/">
-            h1
+           #logo_text
               md-icon.md-size-2x call_merge
-              | Mailstub
+              | MAIL STUB
           </router-link>
       .md-layout-item.pull-right
         <md-button class="md-raised md-primary" to="/login" exact>Login</md-button>

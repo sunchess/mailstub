@@ -17,7 +17,7 @@ defmodule MailstubWeb.Router do
   scope "/api", MailstubWeb.Api do
     pipe_through :api
 
-    resources "/users", UsersController
+    resources "/users", UsersController, only: [:index, :create]
   end
 
   scope "/", MailstubWeb do

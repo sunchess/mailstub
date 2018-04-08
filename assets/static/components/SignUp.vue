@@ -35,7 +35,14 @@ export default {
   }),
   methods: {
     saveUser () {
-       this.sending = true
+      this.sending = true
+      this.$http.post('/api/users', this.form).then(response => {
+        console.log(response)
+      }, error => {
+        // error callback
+        console.log(error)
+        this.sending = false
+      })
     }
   }
 }

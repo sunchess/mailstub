@@ -45,7 +45,10 @@ defmodule Mailstub.Mixfile do
       #{:gen_smtp,  github: "sunchess/gen_smtp"},
       #{:gen_smtp, path: "../gen_smtp"},
       {:gen_smtp,  github: "Vagabond/gen_smtp"},
-      {:httpoison, "~> 1.0"}
+      {:httpoison, "~> 1.0"},
+      {:comeonin, "~> 4.0"},
+      {:bcrypt_elixir, "~> 0.12"},
+      {:guardian, "~> 1.0"}
     ]
   end
 

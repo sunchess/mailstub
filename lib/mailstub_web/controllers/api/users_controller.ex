@@ -2,6 +2,9 @@ defmodule MailstubWeb.Api.UsersController do
   use MailstubWeb, :controller
 
   alias Mailstub.Accounts
+  alias Mailstub.Accounts.User
+
+  action_fallback MailstubWeb.FallbackController
 
   def index(conn, _params) do
     json(conn, %{
@@ -10,15 +13,12 @@ defmodule MailstubWeb.Api.UsersController do
   end
 
   def create(conn, params) do
-    result = case Accounts.create_user(params) do
-      {:ok, user} ->
-        #{:ok, token, _claims} = Guardian.encode_and_sign(facility, :access)
-        {:ok, token, _} = Mailstub.Guardian.encode_and_sign(user)
-        %{user: user, token: token}
-      {:error, model} -> %{error: model.errors}
+    with {:ok, %User{} = user} <- Accounts.create_user(params),
+         {:ok, token, _} = Mailstub.Guardian.encode_and_sign(user) do
+      conn
+      |> put_status(:created)
+      #|> put_resp_header("location", project_path(conn, :show, project))
+      |> render("show.json", user: user, token: token)
     end
-
-    IO.inspect(result)
-    json(conn, result)
   end
 end

@@ -7,6 +7,7 @@ defmodule Mailstub.Accounts.User do
     field :crypted_password, :string
     field :email, :string
     field :password, :string, virtual: true
+    field :password_confirmation, :string, virtual: true
 
     timestamps()
   end
@@ -14,8 +15,9 @@ defmodule Mailstub.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :password])
-    |> validate_required([:email, :password])
+    |> cast(attrs, [:email, :password, :password_confirmation])
+    |> validate_required([:email, :password, :password_confirmation])
+    |> validate_confirmation(:password)
     |> set_password(attrs)
   end
 
@@ -38,6 +40,5 @@ defmodule Mailstub.Accounts.User do
   defp hashed_password(password) do
     Comeonin.Bcrypt.hashpwsalt(password)
   end
-
 
 end

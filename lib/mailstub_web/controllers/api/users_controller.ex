@@ -17,7 +17,7 @@ defmodule MailstubWeb.Api.UsersController do
          {:ok, token, _} = Mailstub.Guardian.encode_and_sign(user) do
       conn
       |> put_status(:created)
-      #|> put_resp_header("location", project_path(conn, :show, project))
+      |> put_resp_header("location", "/")
       |> render("show.json", user: user, token: token)
     end
   end

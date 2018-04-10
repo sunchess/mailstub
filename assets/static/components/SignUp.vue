@@ -45,7 +45,7 @@ export default {
     saveUser () {
       this.sending = true
       this.$http.post('/api/users', this.form).then(response => {
-         this.$router.go('/')
+         //this.$router.go('/')
       }, error => {
         // error callback
         this.sending = false

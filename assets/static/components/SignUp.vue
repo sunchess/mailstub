@@ -1,6 +1,6 @@
 <template lang="pug">
   #sign_up
-    .form.md-card.md-layout-item.md-size-25.md-small-size-100
+    .form.md-card.md-layout-item.md-size-25.md-small-size-100(v-if="!userSaved")
       <md-field v-bind:class="{'md-invalid': errors.email}">
         <label>Email</label>
         <md-input v-model="form.email"></md-input>
@@ -22,6 +22,9 @@
       <md-card-actions>
         <md-button type="submit" class="md-primary md-raised" :disabled="sending" v-on:click="saveUser">Send</md-button>
       </md-card-actions>
+    .form(v-else)
+      p
+        | You are already registered
 </template>
 
 <script>
@@ -45,12 +48,20 @@ export default {
     saveUser () {
       this.sending = true
       this.$http.post('/api/users', this.form).then(response => {
-         //this.$router.go('/')
+        this.userSaved = true
+        this.$store.dispatch('register', response.body)
+        this.$router.push({name: 'home'})
       }, error => {
         // error callback
         this.sending = false
         this.errors = error.body.errors
       })
+    },
+  },
+  created(){
+    console.log(this.$store)
+    if(this.$store.getters.currentUser){
+      this.userSaved = true
     }
   }
 }

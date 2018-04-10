@@ -17,7 +17,7 @@ import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
 import VueMaterial from 'vue-material'
 
-import store from '../store/store'
+import { store } from '../store/store'
 //import 'vue-material/dist/vue-material.css'
 
 // Import local files

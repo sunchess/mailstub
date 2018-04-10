@@ -1,5 +1,5 @@
 export default {
-  register({commit}, form){
-    commit('register', form)
+  register({commit}, user){
+    commit('set_current_user', user)
   }
 }

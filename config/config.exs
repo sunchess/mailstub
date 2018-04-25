@@ -17,9 +17,10 @@ config :mailstub, MailstubWeb.Endpoint,
   pubsub: [name: Mailstub.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
-config :mailstub, Mailstub.Guardian,
+config :mailstub, Mailstub.Auth.Guardian,
        issuer: "mailstub",
-       secret_key: "vQ4e2Rges/IOE8L6vbAZK7KkfGB4uP3kgxFHpS4AYFIy+6Z0tkNU6mZc/eg3fquz"
+       secret_key: "vQ4e2Rges/IOE8L6vbAZK7KkfGB4uP3kgxFHpS4AYFIy+6Z0tkNU6mZc/eg3fquz",
+       ttl: {100, :days}
 
 # Configures Elixir's Logger
 config :logger, :console,

@@ -43,7 +43,6 @@ Vue.use(VueRouter)
 Vue.http.options.root = '/api';
 
 
-
 const router = new VueRouter({
   mode: 'history',
   routes: [

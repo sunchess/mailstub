@@ -25,21 +25,17 @@ defmodule Mailstub.Accounts do
   """
 
   def auth(email, password) do
-    q =
-      from User,
-      where: [email: ^email]
-
-    user = Repo.one(q)
+    user = User |> Repo.get_by(email: email)
 
     if user != nil do
       case User.check_password(password, user) do
         true ->
           {:ok, user}
         _ ->
-          {:error, "Password is invalid"}
+          {:error, :password_is_invalid}
       end
     else
-      {:error, "User is not found"}
+      {:error, :user_is_not_found}
     end
   end
 

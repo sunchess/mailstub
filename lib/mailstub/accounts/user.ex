@@ -18,6 +18,7 @@ defmodule Mailstub.Accounts.User do
     |> cast(attrs, [:email, :password, :password_confirmation])
     |> validate_required([:email, :password, :password_confirmation])
     |> validate_confirmation(:password)
+    |> unique_constraint(:email)
     |> set_password(attrs)
   end
 
@@ -29,9 +30,9 @@ defmodule Mailstub.Accounts.User do
 
   #if we need to change the password
   defp set_password(changeset, params) do
-    if is_binary(params[:password]) and String.length(params[:password]) > 0 do
+    if is_binary(params["password"]) and String.length(params["password"]) > 0 do
       changeset
-      |> put_change(:crypted_password, hashed_password(params[:password]))
+      |> put_change(:crypted_password, hashed_password(params["password"]))
     else
       changeset
     end

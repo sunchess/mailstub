@@ -8,9 +8,14 @@ import vuejsStorage from 'vuejs-storage'
 Vue.use(Vuex)
 Vue.use(vuejsStorage)
 
+var local_storage = JSON.parse(localStorage.getItem("mailstub-namespace"))
+if(local_storage){
+  var current_user = local_storage.current_user
+}
+
 export const store = new Vuex.Store({
   state: {
-    current_user: null
+    current_user: current_user
   },
   actions: actions,
   mutations: mutations,
@@ -24,3 +29,5 @@ export const store = new Vuex.Store({
     })
   ]
 })
+
+

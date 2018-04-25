@@ -49,7 +49,7 @@ export default {
       this.sending = true
       this.$http.post('/api/users', this.form).then(response => {
         this.userSaved = true
-        this.$store.dispatch('register', response.body)
+        this.$store.dispatch('REGISTER', response.body)
         this.$router.push({name: 'home'})
       }, error => {
         // error callback

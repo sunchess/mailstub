@@ -1,4 +1,4 @@
-defmodule MailstubWeb.ProjectView do
+defmodule MailstubWeb.Api.ProjectView do
   use MailstubWeb, :view
   alias MailstubWeb.ProjectView
 

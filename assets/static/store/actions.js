@@ -5,5 +5,9 @@ export default {
 
   LOGIN({commit}, user){
     commit('set_current_user', user)
+  },
+
+  LOGOUT({commit}){
+    commit('logout')
   }
 }

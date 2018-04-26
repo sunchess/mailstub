@@ -56,7 +56,7 @@ export default {
         this.sending = false
         this.errors = error.body.errors
       })
-    },
+    }
   },
   created(){
     console.log(this.$store)

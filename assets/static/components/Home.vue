@@ -1,5 +1,8 @@
 <template lang="pug">
-  #content Here's your content
+  #content
+    <router-link to="/projects"> Projects </router-link>
+
+    | Here's your content
 </template>
 
 <script>

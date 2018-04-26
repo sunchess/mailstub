@@ -13,9 +13,9 @@ defmodule MailstubWeb.Router do
     plug Guardian.Plug.Pipeline,
       module: Mailstub.Auth.Guardian,
       error_handler: Mailstub.Auth.ErrorHandler
-    plug Guardian.Plug.VerifyHeader, realm: :none, claims: %{typ: "access"}
-    plug Guardian.Plug.LoadResource
-    plug Guardian.Plug.EnsureAuthenticated
+      plug Guardian.Plug.VerifyHeader, claims: %{typ: "access"}
+      plug Guardian.Plug.LoadResource
+      plug Guardian.Plug.EnsureAuthenticated
   end
 
   pipeline :api do

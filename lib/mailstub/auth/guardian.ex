@@ -13,6 +13,7 @@ defmodule Mailstub.Auth.Guardian do
   end
 
   def resource_from_claims(%{"sub" => user_id}) do
+    IO.inspect(user_id)
     {:ok, get_user!(user_id)}
   end
 

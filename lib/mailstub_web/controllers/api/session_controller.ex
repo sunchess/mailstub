@@ -8,7 +8,7 @@ defmodule MailstubWeb.Api.SessionController do
 
   def create(conn, %{"email" => email, "password" => password}) do
     with {:ok, user} <- Accounts.auth(email, password),
-         {:ok, token, _} <- Mailstub.Auth.Guardian.encode_and_sign(user) do
+         {:ok, token, _} <- Mailstub.Auth.Guardian.encode_and_sign(user, %{}, token_type: "access") do
 
       conn
       |> put_resp_header("location", "/")

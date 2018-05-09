@@ -33,6 +33,7 @@ import App from "../components/App"
 import Home from "../components/Home"
 import Login from "../components/Login"
 import SignUp from "../components/SignUp"
+import Projects from "../components/Projects"
 
 Vue.config.productionTip = false
 
@@ -42,8 +43,7 @@ Vue.use(VueResource)
 Vue.use(VueRouter)
 Vue.http.options.root = '/api';
 
-
-
+console.log(store.getters.currentToken)
 const router = new VueRouter({
   mode: 'history',
   routes: [
@@ -62,10 +62,26 @@ const router = new VueRouter({
       path: '/signup',
       name: 'signup',
       component: SignUp,
+    },
+    {
+      path: '/projects',
+      name: 'projects',
+      component: Projects,
     }
   ]
 });
 
+
+Vue.http.interceptors.push((request, next)  => {
+  request.headers.set('Authorization', 'Bearer: ' + store.getters.currentToken);
+  next((response) => {
+    if(response.status == 401 ) {
+      //store.dispatch('LOGOUT')
+      //router.push({name: 'login'});
+      console.log("401")
+    }
+  });
+});
 
 new Vue({
   el: '#app',

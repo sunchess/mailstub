@@ -17,4 +17,16 @@ defmodule MailstubWeb.FallbackController do
     |> put_status(:not_found)
     |> render(MailstubWeb.ErrorView, :"404")
   end
+
+  def call(conn, {:error, :password_is_invalid}) do
+    conn
+    |> put_status(:not_found)
+    |> render(MailstubWeb.ErrorView, status: :unauthorized,  message: "Authentication failed!")
+  end
+
+  def call(conn, {:error, :user_is_not_found}) do
+    conn
+    |> put_status(:not_found)
+    |> render(MailstubWeb.ErrorView, status: :unauthorized,  message: "Email is not found!")
+  end
 end

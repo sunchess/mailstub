@@ -28,21 +28,23 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'app',
   data: () => ({
-    user: null,
-    user_name: null,
     show_user_info: false
   }),
 
   methods: {
   },
 
-  created(){
-    if(this.$store.getters.currentUser){
-      this.user = this.$store.getters.currentUser
-      this.user_name = this.$store.getters.currentUser.email.split("@")[0]
+  computed: {
+    user(){
+      return this.$store.getters.currentUser
+    },
+    user_name(){
+      return this.$store.getters.currentUser.email.split("@")[0]
     }
   }
 }

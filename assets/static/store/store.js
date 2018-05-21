@@ -15,7 +15,8 @@ if(local_storage){
 
 export const store = new Vuex.Store({
   state: {
-    current_user: current_user
+    current_user: current_user,
+    projects: []
   },
   actions: actions,
   mutations: mutations,

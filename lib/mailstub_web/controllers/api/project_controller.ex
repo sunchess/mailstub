@@ -13,12 +13,13 @@ defmodule MailstubWeb.Api.ProjectController do
     IO.inspect(headers)
     user = Mailstub.Auth.Guardian.Plug.current_resource(conn)
     IO.inspect(user)
-    projects = Projects.list_projects()
+    projects = Projects.list_projects(user)
+    IO.inspect projects
     render(conn, "index.json", projects: projects)
   end
 
   def create(conn, %{"project" => project_params}, user, _claims) do
-    with {:ok, %Project{} = project} <- Projects.create_project(project_params) do
+    with {:ok, %Project{} = project} <- Projects.create_project(user, project_params) do
       conn
       |> put_status(:created)
       #|> put_resp_header("location", api_project_path(conn, :show, project))

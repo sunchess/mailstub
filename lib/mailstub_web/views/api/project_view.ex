@@ -1,6 +1,6 @@
 defmodule MailstubWeb.Api.ProjectView do
   use MailstubWeb, :view
-  alias MailstubWeb.ProjectView
+  alias MailstubWeb.Api.ProjectView
 
   def render("index.json", %{projects: projects}) do
     %{data: render_many(projects, ProjectView, "project.json")}

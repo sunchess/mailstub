@@ -17,7 +17,8 @@ defmodule Mailstub.Projects do
       [%Project{}, ...]
 
   """
-  def list_projects do
+  def list_projects(user) do
+    #Project |>
     Repo.all(Project)
   end
 
@@ -49,9 +50,10 @@ defmodule Mailstub.Projects do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_project(attrs \\ %{}) do
+  def create_project(user, attrs \\ %{}) do
     %Project{}
     |> Project.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:user, user)
     |> Repo.insert()
   end
 

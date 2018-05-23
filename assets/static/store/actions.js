@@ -9,5 +9,14 @@ export default {
 
   LOGOUT({commit}){
     commit('logout')
+  },
+
+  ADD_PROJECT({commit}, project){
+    commit('add_project', project)
+  },
+
+  SET_PROJECTS({commit}, projects){
+    commit('set_projects', projects)
   }
+
 }

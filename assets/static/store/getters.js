@@ -9,6 +9,17 @@ export default {
     }else{
       return null
     }
-  }
+  },
 
+  currentProjects(state) {
+    return state.projects
+  },
+
+  userName(state){
+    if( state.current_user.email ){
+      return state.current_user.email.split("@")[0]
+    }else{
+      return ""
+    }
+  }
 }

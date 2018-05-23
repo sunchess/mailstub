@@ -28,23 +28,36 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'app',
   data: () => ({
-    user: null,
-    user_name: null,
     show_user_info: false
   }),
 
   methods: {
   },
 
+  computed: {
+    user(){
+      return this.$store.getters.currentUser
+    },
+    user_name(){
+      return this.$store.getters.userName
+    }
+  },
+
   created(){
     if(this.$store.getters.currentUser){
-      this.user = this.$store.getters.currentUser
-      this.user_name = this.$store.getters.currentUser.email.split("@")[0]
+      this.$http.get('/api/projects').then(response => {
+        this.$store.dispatch('SET_PROJECTS', response.body.data)
+      }, error => {
+        // error callback
+        this.errors = error.body.errors
+      })
     }
-  }
+  },
 }
 </script>
 

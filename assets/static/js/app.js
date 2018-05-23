@@ -34,6 +34,7 @@ import Home from "../components/Home"
 import Login from "../components/Login"
 import SignUp from "../components/SignUp"
 import Projects from "../components/Projects"
+import FormProject from "../components/FormProject"
 
 Vue.config.productionTip = false
 
@@ -67,6 +68,16 @@ const router = new VueRouter({
       path: '/projects',
       name: 'projects',
       component: Projects,
+    },
+    {
+      path: '/projects/new',
+      name: 'new_project',
+      component: FormProject,
+    },
+    {
+      path: '/projects/:project_id',
+      name: 'show_project',
+      component: ShowProject
     }
   ]
 });

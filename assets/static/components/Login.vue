@@ -1,7 +1,11 @@
 <template lang="pug">
   #login
+    .error()
+      <md-toolbar v-if="error" class="md-accent">
+        <h5 class="md-title">{{error}}</h5>
+      </md-toolbar>
+
     .form.md-card.md-layout-item.md-size-25.md-small-size-100(v-if="!userSaved")
-      <span class="md-error " v-if="errors">{{errors.join(", ")}}</span>
       <md-field md-clearable>
         <label>Email</label>
         <md-input v-model="form.email"></md-input>
@@ -30,7 +34,7 @@ export default {
     },
     userSaved: false,
     sending: false,
-    errors: null
+    error: null
   }),
   methods: {
     saveUser () {
@@ -42,7 +46,8 @@ export default {
        }, error => {
          // error callback
          this.sending = false
-         this.errors = error.body.errors
+         console.log(error.body)
+         this.error = error.body.message
        })
     }
   },
@@ -57,6 +62,15 @@ export default {
 
 <style lang="scss">
   #login{
+    .error{
+      width: 386px;
+      margin: 0 auto;
+      margin-bottom: 39px;
+      height: 42px;
+      h5{
+        font-size: 16px
+      }
+    }
     .form{
       width: 300px;
       margin: 0 auto;

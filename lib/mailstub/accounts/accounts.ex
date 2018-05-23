@@ -27,7 +27,7 @@ defmodule Mailstub.Accounts do
   def auth(email, password) do
     user = User |> Repo.get_by(email: email)
 
-    if user != nil do
+    if ! is_nil(user) do
       case User.check_password(password, user) do
         true ->
           {:ok, user}

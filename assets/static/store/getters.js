@@ -21,5 +21,14 @@ export default {
     }else{
       return ""
     }
+  },
+
+  currentProject(state){
+    return id => {
+      return state.projects.filter(project =>{
+        return project.id === parseInt(id)
+      })
+    }
   }
+
 }

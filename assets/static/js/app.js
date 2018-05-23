@@ -16,6 +16,7 @@ import Vue from 'vue'
 import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
 import VueMaterial from 'vue-material'
+import underscore from 'vue-underscore';
 
 import { store } from '../store/store'
 //import 'vue-material/dist/vue-material.css'
@@ -32,14 +33,17 @@ import { store } from '../store/store'
 import App from "../components/App"
 import Home from "../components/Home"
 import Login from "../components/Login"
+import Signout from "../components/Signout"
 import SignUp from "../components/SignUp"
 import Projects from "../components/Projects"
 import FormProject from "../components/FormProject"
+import ShowProject from "../components/ShowProject"
 
 Vue.config.productionTip = false
 
 Vue.use(VueMaterial)
 Vue.use(VueResource)
+Vue.use(underscore)
 
 Vue.use(VueRouter)
 Vue.http.options.root = '/api';
@@ -53,11 +57,15 @@ const router = new VueRouter({
       name: 'home',
       component: Home,
     },
-
     {
       path: '/login',
       name: 'login',
       component: Login,
+    },
+    {
+      path: '/signout',
+      name: 'signout',
+      component: Signout,
     },
     {
       path: '/signup',
@@ -68,18 +76,29 @@ const router = new VueRouter({
       path: '/projects',
       name: 'projects',
       component: Projects,
+      meta: {auth: true}
     },
     {
       path: '/projects/new',
       name: 'new_project',
       component: FormProject,
+      meta: {auth: true}
     },
     {
       path: '/projects/:project_id',
       name: 'show_project',
-      component: ShowProject
+      component: ShowProject,
+      meta: {auth: true}
     }
   ]
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.auth) && !store.getters.currentUser) {
+    next({ path: '/login', query: { redirect: to.fullPath }});
+  } else {
+    next();
+  }
 });
 
 

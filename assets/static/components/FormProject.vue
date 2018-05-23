@@ -29,6 +29,7 @@ export default {
        this.sending = true
        this.$http.post('/api/projects', {project: this.form}).then(response => {
          this.projectSaved = true
+         this.$store.dispatch('ADD_PROJECT', response.body.data)
          this.$router.push({name: 'projects'})
        }, error => {
          // error callback

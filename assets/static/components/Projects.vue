@@ -3,14 +3,14 @@
     h1 Projects
     <md-button to="/projects/new">New Project</md-button>
 
-    .div
-      <md-table :value="projects" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+    .div(v-if="projects.length")
+      <md-table :value="projects" md-sort="name" md-sort-order="asc">
         <md-table-row slot="md-table-row" slot-scope="{ item }">
           <md-table-cell md-label="Name" md-sort-by="name">
             | {{ item.name }}
           </md-table-cell>
           <md-table-cell md-label="Actions">
-            <md-button to="/projects/item.id" class="md-fab md-mini">
+            <md-button :to="{name: 'show_project', params:{project_id: item.id}}" class="md-icon-button md-primary">
                 <md-icon>menu</md-icon>
             </md-button>
           </md-table-cell>

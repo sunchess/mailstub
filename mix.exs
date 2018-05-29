@@ -44,7 +44,7 @@ defmodule Mailstub.Mixfile do
       {:eiconv, "~> 1.0.0-alpha1"},
       #{:gen_smtp,  github: "sunchess/gen_smtp"},
       #{:gen_smtp, path: "../gen_smtp"},
-      {:gen_smtp,  github: "Vagabond/gen_smtp"},
+      {:gen_smtp,  "~> 0.12.0"},
       {:httpoison, "~> 1.0"},
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 0.12"},

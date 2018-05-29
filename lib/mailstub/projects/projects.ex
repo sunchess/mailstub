@@ -39,14 +39,14 @@ defmodule Mailstub.Projects do
   def get_project!(id), do: Repo.get!(Project, id)
 
   @doc """
-  Creates a project.
+  Creates a project with user assoc.
 
   ## Examples
 
-      iex> create_project(%{field: value})
+      iex> create_project(user, %{field: value})
       {:ok, %Project{}}
 
-      iex> create_project(%{field: bad_value})
+      iex> create_project(user, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """

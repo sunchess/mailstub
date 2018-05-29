@@ -1,7 +1,7 @@
 defmodule Mailstub.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
-
+  alias Mailstub.Projects.Project
 
   schema "users" do
     field :crypted_password, :string
@@ -9,7 +9,7 @@ defmodule Mailstub.Accounts.User do
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
 
-    has_many :projects, Projects.Project, on_delete: :delete_all
+    has_many :projects, Project, on_delete: :delete_all
     timestamps()
   end
 

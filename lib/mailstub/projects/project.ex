@@ -2,6 +2,7 @@ defmodule Mailstub.Projects.Project do
   use Ecto.Schema
   import Ecto.Changeset
   alias Mailstub.Accounts.User
+  alias Mailstub.Messages.Email
 
 
   schema "projects" do
@@ -10,6 +11,7 @@ defmodule Mailstub.Projects.Project do
     field :secret, :binary_id
 
     belongs_to :user, User
+    has_many :emails, Email, on_delete: :delete_all
     timestamps()
   end
 

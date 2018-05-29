@@ -73,6 +73,7 @@ defmodule MailToJson.SmtpHandler do
   # it only gets called if you add AUTH to your ESMTP extensions
   #@spec handle_AUTH(Type :: 'login' | 'plain' | 'cram-md5', Username :: binary(), Password :: binary() | {binary(), binary()}, state{}) -> {'ok', state{}} | 'error'
   def handle_AUTH(:"cram-md5", username, {digest, seed}, state) do
+    IO.inspect(username)
     project = Mailstub.Projects.Project |> Mailstub.Repo.get_by(key: username)
     case project  do
       %Mailstub.Projects.Project{} ->
@@ -132,9 +133,12 @@ defmodule MailToJson.SmtpHandler do
 
     Logger.debug("Message from #{from} to #{to} with body length #{byte_size(data)} queued as #{unique_id}")
 
-    IO.inspect(state)
+    IO.inspect(data)
     mail = parse_mail(data, state, unique_id)
-    mail_json = Poison.encode!(mail)
+    #mail_json = Poison.encode!(mail)
+
+    IO.inspect(mail)
+    {:ok, _} = Mailstub.Messages.create_message(Mailstub.Repo.get(Mailstub.Projects.Project, state.project), %{body: mail, raw_body: data})
 
     #webhook_url = MailToJson.config(:webhook_url)
     #HTTPoison.post(webhook_url, mail_json, %{"Accept" => "application/json"})

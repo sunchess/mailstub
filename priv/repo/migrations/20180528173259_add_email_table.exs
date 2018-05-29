@@ -5,6 +5,8 @@ defmodule Mailstub.Repo.Migrations.AddEmailTable do
     create table(:emails) do
       add :project_id, references(:projects, on_delete: :delete_all)
       add :body, :map
+
+      timestamps()
     end
 
     create index(:emails, [:project_id])

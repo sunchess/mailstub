@@ -20,7 +20,7 @@ defmodule MailToJson do
   end
 
 
-  def test_mail() do
+  def test_mail do
     host = :net_adm.localhost
     recepients = [{"Jane", "jane@#{host}"}]
     sender = {"John Doe", "john@#{host}"}

@@ -84,5 +84,9 @@ export default {
     right: 0px;
   }
 
+  h1{
+    color:  #6f6f6f;
+  }
+
 }
 </style>

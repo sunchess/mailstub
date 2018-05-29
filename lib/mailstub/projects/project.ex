@@ -6,6 +6,8 @@ defmodule Mailstub.Projects.Project do
 
   schema "projects" do
     field :name, :string
+    field :key, :binary_id
+    field :secret, :binary_id
 
     belongs_to :user, User
     timestamps()

@@ -1,7 +1,35 @@
 <template lang="pug">
   #project
     .info(v-if="project")
-      h1 {{project}}
+      h1 {{project.name}}
+
+      <div class="md-layout md-gutter">
+        <div class="md-layout-item md-size-60">
+
+
+        </div>
+        <div class="md-layout-item md-size-40">
+          .credentials
+            <md-list class="md-double-line">
+              <md-subheader>Credentials</md-subheader>
+              <md-list-item>
+                <span class="md-list-item-text">
+                  span.content {{project.key}}
+                  span Key
+                </span>
+              </md-list-item>
+
+              <md-list-item>
+                <span class="md-list-item-text">
+                  span.content {{project.secret}}
+                  span Secret
+                </span>
+              </md-list-item>
+            </md-list>
+        </div>
+      </div>
+
+
     .error_404(v-else="")
       <md-toolbar class="md-accent">
         <h3 class="md-title">Project not found</h3>
@@ -30,6 +58,16 @@ export default {
 
 <style lang="scss">
 #project{
+  .credentials{
+
+    span.content{
+      background: #f7f7f7;;
+      -webkit-user-select: all;  /* Chrome all / Safari all */
+      -moz-user-select: all;     /* Firefox all */
+      -ms-user-select: all;      /* IE 10+ */
+      user-select: all;          /* Likely future */
+    }
+  }
   .error_404{
     margin: 20px;
     .md-accent{

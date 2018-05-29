@@ -1,6 +1,7 @@
 defmodule MailToJson.SmtpHandler do
   @behaviour :gen_smtp_server_session
   require Logger
+  import Ecto.Query, only: [from: 2]
 
   alias MailToJson.SmtpHandler.State
   alias MailToJson.Utils
@@ -72,13 +73,20 @@ defmodule MailToJson.SmtpHandler do
   # it only gets called if you add AUTH to your ESMTP extensions
   #@spec handle_AUTH(Type :: 'login' | 'plain' | 'cram-md5', Username :: binary(), Password :: binary() | {binary(), binary()}, state{}) -> {'ok', state{}} | 'error'
   def handle_AUTH(:"cram-md5", username, {digest, seed}, state) do
-    case :smtp_util.compute_cram_digest("test", seed) do
-      ^digest ->
-        {:ok, state}
-      _ ->
-        {:ok, Map.put(state, :errors, "Authentication failed")}
-        #:error
-    end;
+    project = Mailstub.Projects.Project |> Mailstub.Repo.get_by(key: username)
+    case project  do
+      %Mailstub.Projects.Project{} ->
+        state = Map.put(state, :project, project.id)
+        case :smtp_util.compute_cram_digest(project.secret, seed) do
+          ^digest ->
+            {:ok, state}
+          _ ->
+            {:ok, Map.put(state, :errors, "Authentication failed")}
+            #:error
+        end
+      nil ->
+        Map.put(state, :errors, "Authentication failed! Make sure that you have correct project key and secret")
+    end
   end
   def handle_AUTH(type, _username, _password, state) do
     {:ok, Map.put(state, :errors, "Authentication failed")}
@@ -124,6 +132,7 @@ defmodule MailToJson.SmtpHandler do
 
     Logger.debug("Message from #{from} to #{to} with body length #{byte_size(data)} queued as #{unique_id}")
 
+    IO.inspect(state)
     mail = parse_mail(data, state, unique_id)
     mail_json = Poison.encode!(mail)
 

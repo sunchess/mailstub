@@ -48,7 +48,8 @@ defmodule Mailstub.Mixfile do
       {:httpoison, "~> 1.0"},
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 0.12"},
-      {:guardian, "~> 1.0"}
+      {:guardian, "~> 1.0"},
+      {:uuid, "~> 1.1"}
     ]
   end
 

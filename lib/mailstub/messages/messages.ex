@@ -10,7 +10,7 @@ defmodule Mailstub.Messages do
   alias Mailstub.Projects.Project
 
   @doc """
-  Creates a project.
+  Creates a email.
 
   ## Examples
       iex> create_message(project, %{field: value})
@@ -25,5 +25,17 @@ defmodule Mailstub.Messages do
     |> Email.changeset(attrs)
     |> Ecto.Changeset.put_assoc(:project, project)
     |> Repo.insert()
+  end
+
+  @doc """
+  List of emails by project.
+
+  ## Examples
+      iex> create_message(porject_id)
+      [%Emails{project_id: porject_id}, ...]
+
+  """
+  def list_emails(project_id) do
+    from(Email, where: [project_id: ^project_id]) |> Repo.all
   end
 end

@@ -5,7 +5,9 @@
 
       <div class="md-layout md-gutter">
         <div class="md-layout-item md-size-60">
-
+          .emails
+            .item(v-for="email in emails")
+              | {{email}}
 
         </div>
         <div class="md-layout-item md-size-40">
@@ -49,9 +51,18 @@ export default {
 
   computed: {
     project(){
-      return this.$store.getters.currentProject(this.$route.params.project_id)[0]
+       return this.$store.getters.currentProject(this.$route.params.project_id)[0]
     },
-  }
+    emails(){
+      this.$http.get('/api/emails', {params: {project_id: this.$route.params.project_id}}).then(response => {
+        //this.$store.dispatch('SET_PROJECTS', response.body.data)
+        console.log(response)
+      }, error => {
+        // error callback
+        this.errors = error.body.errors
+      })
+    }
+  },
 
 }
 </script>

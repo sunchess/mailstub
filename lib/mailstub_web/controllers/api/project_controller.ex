@@ -9,12 +9,7 @@ defmodule MailstubWeb.Api.ProjectController do
   #plug Guardian.Plug.EnsureAuthenticated
 
   def index(conn, _params, user, _claims) do
-    headers = get_req_header(conn, "authorization")
-    IO.inspect(headers)
-    user = Mailstub.Auth.Guardian.Plug.current_resource(conn)
-    IO.inspect(user)
     projects = Projects.list_projects(user)
-    IO.inspect projects
     render(conn, "index.json", projects: projects)
   end
 
@@ -28,7 +23,8 @@ defmodule MailstubWeb.Api.ProjectController do
   end
 
   def show(conn, %{"id" => id}, user, _claims) do
-    project = Projects.get_project!(id)
+    project = Projects.get_project!(id) |> Repo.preload(:emails)
+    IO.inspect(project)
     render(conn, "show.json", project: project)
   end
 

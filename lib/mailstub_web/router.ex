@@ -30,6 +30,7 @@ defmodule MailstubWeb.Router do
 
     pipe_through :authenticated
     resources "/projects", ProjectController
+    resources "/emails", EmailsController
   end
 
   scope "/", MailstubWeb do

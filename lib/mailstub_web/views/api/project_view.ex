@@ -15,7 +15,7 @@ defmodule MailstubWeb.Api.ProjectView do
       id: project.id,
       name: project.name,
       key: project.key,
-      secret: project.secret,
+      secret: project.secret
     }
   end
 end

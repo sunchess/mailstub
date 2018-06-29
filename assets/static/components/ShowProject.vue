@@ -4,14 +4,26 @@
       h1 {{project.name}}
 
       <div class="md-layout md-gutter">
-        <div class="md-layout-item md-size-60">
+        <div class="md-layout-item md-size-40">
           .emails
-            .item(v-for="email in emails")
-              | {{email}}
+            .item(v-for="email in emails" v-on:click="show_email(email)")
+              | {{email.subject}}
 
         </div>
-        <div class="md-layout-item md-size-40">
-          .credentials
+        <div class="md-layout-item md-size-60">
+          .email(v-if="email")
+            .subject
+              |{{email.subject}}
+            .from
+              |{{email.from.email}}
+            .to
+              .email(v-for="to in email.to")
+                |{{to.email}}
+            <iframe src="/">
+            </iframe>
+
+
+          .credentials(v-else)
             <md-list class="md-double-line">
               <md-subheader>Credentials</md-subheader>
               <md-list-item>
@@ -47,32 +59,52 @@ export default {
   name: 'projects',
   data: () => ({
     errors: null,
+    emails: [],
+    email: null
   }),
 
+  methods: {
+    show_email(email){
+      this.email = email
+    }
+  },
   computed: {
     project(){
        return this.$store.getters.currentProject(this.$route.params.project_id)[0]
-    },
-    emails(){
-      this.$http.get('/api/emails', {params: {project_id: this.$route.params.project_id}}).then(response => {
-        //this.$store.dispatch('SET_PROJECTS', response.body.data)
-        console.log(response)
-      }, error => {
-        // error callback
-        this.errors = error.body.errors
-      })
     }
   },
+
+  created(){
+    this.$http.get('/api/emails', {params: {project_id: this.$route.params.project_id}}).then(response => {
+      //this.$store.dispatch('SET_PROJECT_EMAIL', response.body.data)
+      //console.log(this.$store.getters.currentProjectEmails)
+      this.emails = response.body.data
+    }, error => {
+      // error callback
+      this.errors = error.body.errors
+    })
+  }
+
 
 }
 </script>
 
 <style lang="scss">
 #project{
+  .emails{
+    background: #fff;
+    padding: 5px;
+
+    .item{
+      color: #0976ef;
+      cursor: pointer;
+      margin: 0 0 5px 0;
+    }
+  }
   .credentials{
 
     span.content{
-      background: #f7f7f7;;
+      background: #f7f7f7;
       -webkit-user-select: all;  /* Chrome all / Safari all */
       -moz-user-select: all;     /* Firefox all */
       -ms-user-select: all;      /* IE 10+ */

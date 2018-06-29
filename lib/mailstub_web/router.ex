@@ -13,9 +13,9 @@ defmodule MailstubWeb.Router do
     plug Guardian.Plug.Pipeline,
       module: Mailstub.Auth.Guardian,
       error_handler: Mailstub.Auth.ErrorHandler
-      plug Guardian.Plug.VerifyHeader, claims: %{typ: "access"}
-      plug Guardian.Plug.LoadResource
-      plug Guardian.Plug.EnsureAuthenticated
+    plug Guardian.Plug.VerifyHeader, claims: %{typ: "access"}
+    plug Guardian.Plug.LoadResource
+    plug Guardian.Plug.EnsureAuthenticated
   end
 
   pipeline :api do
@@ -30,12 +30,14 @@ defmodule MailstubWeb.Router do
 
     pipe_through :authenticated
     resources "/projects", ProjectController
-    resources "/emails", EmailsController
+    resources "/emails", EmailController
   end
 
   scope "/", MailstubWeb do
     pipe_through :browser # Use the default browser stack
 
+    pipe_through :authenticated
+    get "/email", EmailController, :show
     get "/*path", PageController, :index
   end
 

@@ -8,6 +8,7 @@ defmodule Mailstub.Messages do
 
   alias Mailstub.Messages.Email
   alias Mailstub.Projects.Project
+  alias Mailstub.Accounts.User
 
   @doc """
   Creates a email.
@@ -31,11 +32,15 @@ defmodule Mailstub.Messages do
   List of emails by project.
 
   ## Examples
-      iex> create_message(porject_id)
+      iex> create_message(user, porject_id)
       [%Emails{project_id: porject_id}, ...]
 
   """
-  def list_emails(project_id) do
-    from(Email, where: [project_id: ^project_id]) |> Repo.all
+  def list_emails(user, project_id) do
+    from(u in User,
+      join: p in assoc(u, :projects),
+      join: e in assoc(p, :emails),
+      select: e,
+      where: e.project_id == ^project_id) |> Repo.all
   end
 end

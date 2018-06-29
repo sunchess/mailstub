@@ -48,7 +48,7 @@ Vue.use(underscore)
 Vue.use(VueRouter)
 Vue.http.options.root = '/api';
 
-console.log(store.getters.currentToken)
+//console.log(store.getters.currentToken)
 const router = new VueRouter({
   mode: 'history',
   routes: [

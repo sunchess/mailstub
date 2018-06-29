@@ -29,6 +29,10 @@ export default {
         return project.id === parseInt(id)
       })
     }
+  },
+
+  currentProjectEmails(state){
+    return state["project_emails"]
   }
 
 }

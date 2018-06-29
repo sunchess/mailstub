@@ -1,4 +1,4 @@
-defmodule MailstubWeb.Api.EmailsController do
+defmodule MailstubWeb.Api.EmailController do
   use MailstubWeb, :controller
   use Mailstub.Auth.Controller
   alias Mailstub.Messages
@@ -7,7 +7,7 @@ defmodule MailstubWeb.Api.EmailsController do
   action_fallback MailstubWeb.FallbackController
 
   def index(conn, %{"project_id"=>project_id}, user, _claims) do
-    emails = Messages.list_emails(project_id)
+    emails = Messages.list_emails(user, project_id)
     render(conn, "index.json", emails: emails)
   end
 end

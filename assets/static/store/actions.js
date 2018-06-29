@@ -17,6 +17,10 @@ export default {
 
   SET_PROJECTS({commit}, projects){
     commit('set_projects', projects)
+  },
+
+  SET_PROJECT_EMAIL({commit}, emails){
+    commit('set_project_emails', emails)
   }
 
 }

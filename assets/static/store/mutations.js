@@ -12,5 +12,9 @@ export default {
 
   set_projects(state, projects){
     state.projects = projects
+  },
+
+  set_project_emails(state, emails){
+    state.project_emails = emails
   }
 }

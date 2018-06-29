@@ -37,11 +37,12 @@ export default {
     error: null
   }),
   methods: {
-    saveUser () {
+    saveUser() {
        this.sending = true
        this.$http.post('/api/session', this.form).then(response => {
          this.userSaved = true
          this.$store.dispatch('LOGIN', response.body)
+         this.loadProjects()
          this.$router.push({name: 'home'})
        }, error => {
          // error callback
@@ -49,6 +50,15 @@ export default {
          console.log(error.body)
          this.error = error.body.message
        })
+    },
+
+    loadProjects(){
+      this.$http.get('/api/projects').then(response => {
+        this.$store.dispatch('SET_PROJECTS', response.body.data)
+      }, error => {
+        // error callback
+        this.errors = error.body.errors
+      })
     }
   },
 

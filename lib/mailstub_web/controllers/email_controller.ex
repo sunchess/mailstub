@@ -1,14 +1,15 @@
 defmodule MailstubWeb.EmailController do
   use MailstubWeb, :controller
-  use Mailstub.Auth.Controller
+  import Ecto.Query
 
-  def show(conn, %{"id" => email_id}, user, _claims) do
-    email = from(u in User,
-              join: p in assoc(u, :projects),
-              join: e in assoc(p, :emails),
-              select: e,
-              where: e.id == ^email_id, u.id == ^user.id) |> Repo.one
+  alias Mailstub.Messages.Email
+  alias Mailstub.Repo
 
-    render conn, "app.html"
+  plug :put_layout, "clean.html"
+
+  def show(conn, %{"id" => secret_id}) do
+    email = Repo.get_by!(Email, secret_id: secret_id)
+
+    render conn, "show.html", email: email
   end
 end

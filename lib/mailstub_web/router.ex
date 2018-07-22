@@ -35,9 +35,8 @@ defmodule MailstubWeb.Router do
 
   scope "/", MailstubWeb do
     pipe_through :browser # Use the default browser stack
+    resources "/email", EmailController, only: [:show]
 
-    pipe_through :authenticated
-    get "/email", EmailController, :show
     get "/*path", PageController, :index
   end
 

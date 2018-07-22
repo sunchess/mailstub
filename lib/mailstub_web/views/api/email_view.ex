@@ -16,7 +16,8 @@ defmodule MailstubWeb.Api.EmailView do
        from: email.body["From"],
        to: email.body["To"],
        subject: email.body["Subject"],
-       body: email.body["html_body"]
+       body: email.body["html_body"],
+       secret_id: email.secret_id
     }
   end
 

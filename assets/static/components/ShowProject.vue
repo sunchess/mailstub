@@ -19,7 +19,7 @@
             .to
               .email(v-for="to in email.to")
                 |{{to.email}}
-            <iframe src="/">
+            <iframe :src="iframe_src(email.secret_id)">
             </iframe>
 
 
@@ -66,7 +66,12 @@ export default {
   methods: {
     show_email(email){
       this.email = email
+    },
+
+    iframe_src(id){
+      return "/email/" + id
     }
+
   },
   computed: {
     project(){

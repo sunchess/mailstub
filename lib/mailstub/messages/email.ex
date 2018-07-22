@@ -6,6 +6,7 @@ defmodule Mailstub.Messages.Email do
   schema "emails" do
     field :body, :map
     field :raw_body, :string
+    field :secret_id, :binary_id
 
     belongs_to :project, Project
 

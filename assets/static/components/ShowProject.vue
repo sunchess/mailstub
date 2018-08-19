@@ -12,15 +12,16 @@
         </div>
         <div class="md-layout-item md-size-60">
           .email(v-if="email")
+            .from
+               b From: &nbsp;
+               |{{email.from.email}}
+            .to
+              b To:&nbsp;
+              span(v-for="to in email.to")
+                | {{to.email}}
             .subject
               |{{email.subject}}
-            .from
-              |{{email.from.email}}
-            .to
-              .email(v-for="to in email.to")
-                |{{to.email}}
-            <iframe :src="iframe_src(email.secret_id)">
-            </iframe>
+            <iframe frameBorder="0" :src="iframe_src(email.secret_id)"> </iframe>
 
 
           .credentials(v-else)
@@ -96,6 +97,21 @@ export default {
 
 <style lang="scss">
 #project{
+  iframe{
+    width: 100%;
+  }
+
+  .subject{
+    font-weight: bold;
+  }
+
+  .from{
+    margin: 0 0 0 0;
+  }
+  .to{
+    margin: 0 0 0 0;
+  }
+
   .emails{
     background: #fff;
     padding: 5px;

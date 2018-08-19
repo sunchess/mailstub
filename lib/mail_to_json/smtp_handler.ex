@@ -135,10 +135,12 @@ defmodule MailToJson.SmtpHandler do
 
     IO.inspect(data)
     mail = parse_mail(data, state, unique_id)
+    IO.inspect(mail)
     #mail_json = Poison.encode!(mail)
 
+    IO.puts("************************")
     IO.inspect(mail)
-    {:ok, _} = Mailstub.Messages.create_message(Mailstub.Repo.get(Mailstub.Projects.Project, state.project), %{body: mail, raw_body: data})
+    #{:ok, _} = Mailstub.Messages.create_message(Mailstub.Repo.get(Mailstub.Projects.Project, state.project), %{body: mail, raw_body: data})
 
     #webhook_url = MailToJson.config(:webhook_url)
     #HTTPoison.post(webhook_url, mail_json, %{"Accept" => "application/json"})
@@ -168,14 +170,15 @@ defmodule MailToJson.SmtpHandler do
 
 
   defp parse_mail(data, _state, _unique_id) do
-    try do
+    IO.inspect(:mimemail.decode(data))
+    #try do
       # :mimemail.decode/1 is provided by gen_smtp
       :mimemail.decode(data)
       |> MailParser.parse_mail_data()
-    rescue
-      reason ->
-        :io.format("Message decode FAILED with ~p:~n", [reason])
-    end
+      #rescue
+        #reason ->
+          #:io.format("Message decode FAILED with ~p:~n", [reason])
+          #end
   end
 
 end

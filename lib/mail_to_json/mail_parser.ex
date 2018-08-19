@@ -2,12 +2,16 @@ defmodule MailToJson.MailParser do
 
   alias MailToJson.Utils
 
-
   def parse_mail_data({"multipart" = content_type_name, content_subtype_name, mail_meta, _, body}) do
     parse_mail_bodies(body)
     |> Map.merge extract_mail_meta(mail_meta)
   end
 
+  def parse_mail_data({"image" = content_type_name, content_subtype_name, mail_meta, _, body}) do
+    #создать таблицу attachments и туда сохранять {"Content-ID", "<5b7570f526e14_88393fdd7ec3ee0c2273d@MacBook-Pro-Dmitriev.local.mail>"} сам файл сохранять в файловую систему откуда показывать
+    # <img src=\"cid:5b7570f526e14_88393fdd7ec3ee0c2273d@MacBook-Pro-Dmitriev.local.mail\" />
+
+  end
 
   def parse_mail_data({"text" = content_type_name, content_subtype_name, mail_meta, _, body})
     when content_subtype_name == "plain" or content_subtype_name == "html" do
